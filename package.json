@@ -1,0 +1,31 @@
+{
+  "name": "api_house_hiring",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hénochristo",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "fs": "^0.0.1-security",
+    "html-pdf": "^3.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.13",
+    "pdfkit": "^0.15.0",
+    "pg": "^8.11.5",
+    "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "crypto": "^1.0.1",
+    "nodemon": "^3.1.0"
+  }
+}

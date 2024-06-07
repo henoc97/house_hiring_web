@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reçu de Paiement de Loyer</title>
+  <link rel="stylesheet" href="receipt.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+  <div class="center-container">
+    <div class="receipt-container" id="receipt">
+      <header>
+        <i class='bx bx-home-smile'></i>
+        <h1>Reçu de Paiement de Loyer</h1>
+      </header>
+      <div class="receipt-details">
+        <p><strong>Nom du Locataire :</strong> Jean Dupont</p>
+        <p><strong>Adresse du Locataire :</strong> 123 Rue Exemple, 75001 Paris</p>
+        <p><strong>Numéro de Reçu :</strong> 00123</p>
+        <p><strong>Date d'Émission :</strong> 01 Juin 2024</p>
+        <p><strong>Montant du Loyer :</strong> 1200 €</p>
+      </div>
+      <div class="payment-details">
+        <h2>Détails du Paiement</h2>
+        <p><strong>Méthode de Paiement :</strong> Virement Bancaire</p>
+        <p><strong>Référence de Transaction :</strong> TX1234567890</p>
+        <p><strong>Date de Paiement :</strong> 01 Juin 2024</p>
+        <p>Ce reçu confirme que le locataire susmentionné a effectué le paiement du loyer pour le mois indiqué ci-dessus. Le montant a été reçu en totalité et aucune autre somme n'est due pour cette période.</p>
+      </div>
+      <div class="signature">
+        <h3>Signature</h3>
+        <img src="signature.png" alt="la signature">
+      </div>
+      <footer>
+        <p>Merci d'avoir payé à temps. Pour toute question, veuillez nous contacter à l'adresse contact@exemple.com.</p>
+        <p>© 2024 Property Manager. Tous droits réservés.</p>
+      </footer>
+    </div>
+    <button id="download-pdf">Télécharger en PDF</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
+  <script>
+    document.getElementById('download-pdf').addEventListener('click', function () {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Ajouter le titre
+      doc.setFontSize(18);
+      doc.text('Reçu de Payment de Loyer', 20, 20);
+
+      // Ajouter les détails du reçu
+      doc.setFontSize(12);
+      doc.text('Nom du Locataire: Jean Dupont', 20, 30);
+      doc.text('Adresse: 123 Rue Exemple, 75001 Paris', 20, 40);
+      doc.text('Numéro de Reçu: 00123', 20, 50);
+      doc.text('Date: 01 Juin 2024', 20, 60);
+      doc.text('Montant: 1200 €', 20, 70);
+
+      // Ajouter les détails du paiement
+      doc.text('Détails du Paiement', 20, 90);
+      doc.text('Méthode de Paiement: Virement Bancaire', 20, 100);
+      doc.text('Référence de Transaction: TX1234567890', 20, 110);
+      doc.text('Date de Paiement: 01 Juin 2024', 20, 120);
+
+      // Sauvegarder le PDF
+      doc.save('recu_paiement_loyer.pdf');
+    });
+  </script>
+</body>
+</html>
