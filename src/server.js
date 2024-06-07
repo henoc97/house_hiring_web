@@ -1,11 +1,19 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 require("dotenv/config");
 
+
+
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Configurer le moteur de template EJS
 app.set('view engine', 'ejs');
@@ -14,48 +22,15 @@ app.set('views', path.join(__dirname, '../frontend/views'));
 // Servir les fichiers statiques
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
-// Définir la route principale
-app.get('/', (req, res) => {
-  res.render('index');
-});
+// Importer le router
+const frontendrouter = require('./routers/frontendrouter'); 
 
-// Routes pour les vues
-app.get('/dashboard', (req, res) => {
-  res.render('dashboard', {
-    recentpayments: 'recentpayments',
-    newcustomers: 'newcustomers'
-  });
-});
+const backendownerrouter = require('./routers/backend_owner'); // Assurez-vous que le chemin est correct
 
-app.get('/propertiespart', (req, res) => {
-  res.render('propertiespart', {
-    myproperties : "myproperties",
-    addpropertyform : "addpropertyform"
-  }); // Assurez-vous que myproperties.ejs existe
-});
+// Utiliser le router
+app.use('/', frontendrouter);
 
-app.get('/tenant_home', (req, res) => {
-  res.render('tenants_properties_part', {
-    tenants_properties: "tenants_properties",
-    addtenantform: "addtenantform"
-  }); 
-});
-
-app.get('/tenants_part', (req, res) => {
-  res.render('tenants_part', {
-    mytenants : "mytenants",
-    tenantsmessages:"tenantsmessages"
-  }); 
-});
-
-app.get('/myreciept', (req, res) => {
-  res.render('myreciept'); 
-});
-
-app.get('/receipt', (req, res) => {
-  res.render('receipt');
-});
-
+app.use('/backendowner', backendownerrouter);
 
 const port = 3000;
 
