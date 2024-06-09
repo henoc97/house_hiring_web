@@ -9,7 +9,7 @@ const {getotp, createUserOwner} = require('../../controller/user');
 
 router.post("/getotp", getotp);
 
-router.get("/createUserOwner", createUserOwner);
+router.post("/createUserOwner", createUserOwner);
 
 
 

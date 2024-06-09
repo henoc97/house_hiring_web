@@ -42,13 +42,13 @@ module.exports.createUserOwner = (req, res) => {
                 const pwdhashed = await hashPassword(pwd);
                 console.log(pwdhashed);
 
-                console.log(email_otp.email);
+                console.log(email_otp[email], otp);
 
-                if (email_otp.email === otp) {
+                if (email_otp[email] == otp) {
                     
                     console.log('Connecté à PostgreSQL');
                     const query = "SELECT * FROM insert_owner($1, $2)";
-                    const values = [email, pwd];
+                    const values = [email, pwdhashed];
                     return client.query(query, values, (err, result) => {
                     release();
                     if (err) {
