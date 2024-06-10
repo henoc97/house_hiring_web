@@ -28,7 +28,7 @@ module.exports.getotp = (req, res) => {
 }
 
 module.exports.refreshToken = (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
+    const {refreshToken} = req.body;
 
     if (!refreshToken) {
         return res.status(401).json({ message: 'No refresh token provided' });
@@ -39,9 +39,10 @@ module.exports.refreshToken = (req, res) => {
         const decoded = jwt.verify(refreshToken, key);
 
         const user = { id: decoded.userId, email: decoded.userEmail };
-        const newAccessToken = generateToken(user, '15m');
+        const newAccessToken = generateToken(user, "15m");
+        const newRefreshToken = generateToken(user, "7d");
 
-        res.json({ accessToken: newAccessToken });
+        res.json({ accessToken: newAccessToken, refreshToken: newRefreshToken });
     } catch (err) {
         res.status(401).json({ message: 'Invalid refresh token' });
     }
@@ -122,10 +123,11 @@ module.exports.userauth = (req, res) => {
                             console.log("ok");
                             const user = User.jsonToNewUser(result.rows[0])
                             console.log("user:", user);
-                            const newToken = generateToken({id : user.userID, email : user.email})
+                            const newaccesToken = generateToken({id : user.userID, email : user.email}, "2d");
+                            const newrefreshToken = generateToken({id : user.userID, email : user.email}, "7d")
                             console.log("email",  user.email);
-                            console.log(newToken);
-                            res.status(200).json({ accessToken: newToken, user: user.toJson()});
+                            console.log(newaccesToken, newrefreshToken);
+                            res.status(200).json({refreshToken : newrefreshToken, accessToken: newaccesToken, user: user.toJson()});
                         } else {
                             res.status(404).json({ message: 'Mot de passe incorrect' });
                         }

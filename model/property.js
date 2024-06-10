@@ -1,10 +1,10 @@
 
 class Property{
-    constructor(id, address, description, cost) {
+    constructor(id, address, description, price) {
         this.id = id;
         this.address = address;
         this.description = description;
-        this.cost = cost;
+        this.price = price;
     }
 
     toJSON() {
@@ -12,7 +12,7 @@ class Property{
             "id": this.id,
             "address": this.address,
             "description": this.description,
-            "price": this.cost
+            "price": this.price
         };
     }
 
@@ -20,9 +20,9 @@ class Property{
     static jsonTONewProperty(property){
         return new Property(
             property.id, 
-            property.address, 
-            property.description, 
-            property.cost
+            property.address_property, 
+            property.descriptions, 
+            property.price
         );
     }
 }

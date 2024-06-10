@@ -83,11 +83,10 @@
       console.log(data);
       // Stocker les tokens si l'authentification est réussie
       if (data.accessToken) {
-        alert('1')
         console.log(data.accessToken);
         localStorage.setItem('accessToken', data.accessToken);
         setCookie("refreshToken", data.refreshToken, 7);
-        window.location.href = dashboardURL; 
+        window.location.href = "/"; 
       } else {
         alert('Erreur de login');
       }

@@ -1,15 +1,14 @@
 
-const {setCookie, getCookie} = require('./cookies_engine');
-
 function renewAccessToken() {
     let refreshToken = getCookie('refreshToken');
 
-    return fetch('https://votre-api.com/renew-token', {
+    return fetch(host + 'refreshToken', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ token: refreshToken })
+        
+        body: JSON.stringify({ refreshToken: refreshToken })
     })
     .then(response => {
         if (!response.ok) {
@@ -25,6 +24,6 @@ function renewAccessToken() {
     .catch(error => {
         console.error('Erreur de renouvellement du token:', error);
         // Si le renouvellement échoue, rediriger l'utilisateur vers la page de login
-        window.location.href = 'http://192.168.137.1:3000/sign_log';
+        window.location.href = '/sign_log';
     });
 }

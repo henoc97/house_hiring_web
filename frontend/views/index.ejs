@@ -21,6 +21,8 @@
   </section>
 
 <script src="endpoints.js"></script>
+<script src="renewAccessToken.js"></script>
+<script src="cookies_engine.js"></script>
 <script>
   document.getElementById('btn').addEventListener('click', function() {
     document.querySelector('.sidebar').classList.toggle('open');
@@ -55,6 +57,17 @@
           .then(response => response.text())
           .then(data => {
             document.querySelector('.details').innerHTML = data;
+
+            const propertyForm = document.getElementById('property-form');
+            const propertiesTable = document.getElementById('myPropertiesTable');
+            if (propertyForm && propertiesTable) {
+              propertyForm.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+                createPropertyRequest();
+              });
+
+              getPropertiesRequest();
+            }
           });
       } 
 
@@ -86,38 +99,85 @@
 </script>
 
 <script>
-  document.getElementById('property-form').addEventListener('submit', function(event) {
-    event.preventDefault(); 
-    createPropertyRequest();
-  });
-
   function createPropertyRequest(){
     let address = document.getElementById('address').value;
     let description = document.getElementById('description').value;
     let cost = document.getElementById('cost').value;
+
+    let token = localStorage.getItem('accessToken');
 
     fetch(host + 'createProperties', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
-      }
+      },
+      body : JSON.stringify({
+        "address": address,
+        "description": description,
+        "cost": cost
+      })
     })
     .then(response => {
-        if (!response.ok && response.status === 401) {
+        if (!response.ok && (response.status === 401 || response.status === 403)) {
+            alert("problem")
             return renewAccessToken().then(() => createPropertyRequest());
         }
         return response.json();
     })
     .then(data => {
         console.log(data);
+        document.getElementById('property-form').reset();
+        getPropertiesRequest();
     })
     .catch(error => {
         console.error('Erreur:', error);
-        window.location.href = logSignURL;
+        window.location.href = "/sign_log";
     });
   }
 </script>
+
+
+<script>
+  function getPropertiesRequest() {
+    let token = localStorage.getItem('accessToken');
+    fetch(host + 'myProperties', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("data received:", data); // Log les données reçues
+
+      // Si les propriétés sont enveloppées dans un objet { myProperties }
+      const properties = data.myProperties || data;
+
+      const tableBody = document.getElementById("myPropertiesTable");
+      if (tableBody) {
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        properties.forEach((property) => {
+          console.log("Property data:", property); // Log chaque propriété
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${property.address}</td>
+            <td>${property.description}</td>
+            <td>${property.price}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      } else {
+        console.error("Element with ID 'myPropertiesTable' not found.");
+      }
+    })
+    .catch((error) => console.error('Error fetching properties:', error));
+  }
+</script>
+
+
 
 </body>
 </html>

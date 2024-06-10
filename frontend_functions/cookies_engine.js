@@ -8,7 +8,7 @@ function setCookie(name, value, days) {
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         expires = "; expires=" + date.toUTCString();
     }
-    document.cookie = name + "=" + (value || "")  + expires + "; path=/; Secure; HttpOnly";
+    document.cookie = name + "=" + (value || "") + expires + "; path=/; Secure";
 }
 
 function getCookie(name) {
@@ -21,5 +21,3 @@ function getCookie(name) {
     }
     return null;
 }
-
-module.exports = {setCookie, getCookie}
