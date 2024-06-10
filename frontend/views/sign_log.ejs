@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Coding Template - login & signup form</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="wrapper">
+  <div class="title-text">
+    <div class="title login">Se connecter</div>
+    <div class="title signup">S'inscrire</div>
+  </div>
+  <div class="form-container">
+    <div class="slide-controls">
+      <input type="radio" name="slide" id="login" checked>
+      <input type="radio" name="slide" id="signup">
+      <label for="login" class="slide login">Connecter</label>
+      <label for="signup" class="slide signup">S'inscrire</label>
+      <div class="slider-tab"></div>
+    </div>
+    <div class="form-inner">
+      <form id="login-form" class="login">
+        <div class="field">
+          <input type="text" id="email" name="email" placeholder="Adresse e-mail" required>
+        </div>
+        <div class="field">
+          <input type="password" id="pwd" name="pwd" placeholder="Mot de passe" required>
+        </div>
+        <div class="pass-link"><strong><a href="#">Mot de passe oublié?</a></strong></div>
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <input type="submit" value="Login">
+        </div>
+        <div class="signup-link">Pas de compte? <strong><a href="#">S'inscrire maintenant</a></strong></div>
+      </form>
+      <form class="signup" action="http://192.168.137.1:3000/backendowner/getotp" method="post">
+        <div class="field">
+          <input type="text" id="signup-email" name="email" placeholder="Adresse e-mail" required>
+        </div>
+        <div class="field">
+          <input type="password" id="signup-pwd" name="pwd" placeholder="Mot de passe" required>
+        </div>
+        <div class="field">
+          <input type="password" id="signup-pwd1" name="pwd1" placeholder="Confirmation du mot de passe" required>
+        </div>
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <input type="submit" value="S'inscrire">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="cookies_engine.js"></script>
+<script src="log_sign_script.js"></script>
+<script src="endpoints.js"></script>
+<script>
+  document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    makeRequest();
+  });
+
+  function makeRequest() {
+    let email = document.getElementById('email').value;
+    let pwd = document.getElementById('pwd').value;
+
+    fetch(host + 'userauth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: email, pwd: pwd })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erreur de réseau');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      // Stocker les tokens si l'authentification est réussie
+      if (data.accessToken) {
+        alert('1')
+        console.log(data.accessToken);
+        localStorage.setItem('accessToken', data.accessToken);
+        setCookie("refreshToken", data.refreshToken, 7);
+        window.location.href = dashboardURL; 
+      } else {
+        alert('Erreur de login');
+      }
+    })
+    .catch(error => {
+      console.error('Erreur:', error);
+    });
+  }
+</script>
+
+</body>
+</html>

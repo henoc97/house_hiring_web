@@ -27,6 +27,26 @@ module.exports.getotp = (req, res) => {
         
 }
 
+module.exports.refreshToken = (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+        return res.status(401).json({ message: 'No refresh token provided' });
+    }
+
+    try {
+        const key = process.env.TOKEN_KEY;
+        const decoded = jwt.verify(refreshToken, key);
+
+        const user = { id: decoded.userId, email: decoded.userEmail };
+        const newAccessToken = generateToken(user, '15m');
+
+        res.json({ accessToken: newAccessToken });
+    } catch (err) {
+        res.status(401).json({ message: 'Invalid refresh token' });
+    }
+}
+
 
 module.exports.createUserOwner = (req, res) => {
     
@@ -83,10 +103,11 @@ module.exports.userauth = (req, res) => {
             }
             console.log('Connecté à PostgreSQL');
             // Exemple d'exécution d'une requête SQL
+            console.log(req.body);
             const {email, pwd} = req.body;
             console.log("email:", email);
             if (mailTest(email)){
-                const query = "SELECT * FROM show_user($1)"
+                const query = "SELECT * FROM show_owner($1)"
                 const values = [email]
                 return client.query(query, values, async (err, result) => {
                     release();
@@ -104,7 +125,7 @@ module.exports.userauth = (req, res) => {
                             const newToken = generateToken({id : user.userID, email : user.email})
                             console.log("email",  user.email);
                             console.log(newToken);
-                            res.status(200).json({ token: newToken, user: user.toJson()});
+                            res.status(200).json({ accessToken: newToken, user: user.toJson()});
                         } else {
                             res.status(404).json({ message: 'Mot de passe incorrect' });
                         }

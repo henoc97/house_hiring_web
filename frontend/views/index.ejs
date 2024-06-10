@@ -20,6 +20,7 @@
     </div>
   </section>
 
+<script src="endpoints.js"></script>
 <script>
   document.getElementById('btn').addEventListener('click', function() {
     document.querySelector('.sidebar').classList.toggle('open');
@@ -82,6 +83,40 @@
       }
     });
   });
+</script>
+
+<script>
+  document.getElementById('property-form').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    createPropertyRequest();
+  });
+
+  function createPropertyRequest(){
+    let address = document.getElementById('address').value;
+    let description = document.getElementById('description').value;
+    let cost = document.getElementById('cost').value;
+
+    fetch(host + 'createProperties', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+        if (!response.ok && response.status === 401) {
+            return renewAccessToken().then(() => createPropertyRequest());
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        window.location.href = logSignURL;
+    });
+  }
 </script>
 
 </body>

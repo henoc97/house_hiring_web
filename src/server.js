@@ -22,6 +22,10 @@ app.set('views', path.join(__dirname, '../frontend/views'));
 // Servir les fichiers statiques
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
+app.use(express.static(path.join(__dirname, '../frontend/img')));
+
+app.use(express.static(path.join(__dirname, '../frontend_functions')));
+
 // Importer le router
 const frontendrouter = require('./routers/frontendrouter'); 
 

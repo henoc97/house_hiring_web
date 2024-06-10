@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+require('dotenv').config();
 
 
 
+router.get('/sign_log', (req, res) => {
+  res.render('sign_log');
+});
 
 router.get('/redirect', (req, res) => {
   res.render('redirect');

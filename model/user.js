@@ -1,14 +1,14 @@
 
 class User{
     
-    constructor(id, firstname, lastname, email, pwd, contactmoov, contacttg){
+    constructor(id, firstname, lastname, email, pwd, contactmoov, contacttg, create_time){
             this.userID = id;
             this.firstname = firstname;
             this.lastname = lastname;
             this.email = email;
             this.pwd = pwd;
             this.contactmoov = contactmoov;
-            this.contacttg = contacttg
+            this.contacttg = contacttg;
             this.create_time = create_time;
     }
 

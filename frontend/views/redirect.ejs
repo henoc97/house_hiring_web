@@ -37,9 +37,10 @@
     <p>Redirection en cours, veuillez patienter...</p>
   </div>
 
+  <script src="endpoints.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      const url = 'http://192.168.137.1:3000/backendowner/createUserOwner';
+      const url = host + 'createUserOwner';
       const params = new URLSearchParams(window.location.search);
       const email = params.get('email');
       const pwd = params.get('pwd');
@@ -55,8 +56,10 @@
       .then(response => response.json())
       .then(data => {
         
+        
         // Redirection vers la page de succès
-        window.location.href = 'http://192.168.137.1:3000/';
+        window.location.href = dashboardURL;
+        
       })
       .catch(error => {
         console.error('Error:', error);
