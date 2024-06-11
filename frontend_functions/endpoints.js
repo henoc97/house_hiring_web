@@ -1,7 +1,9 @@
 
 
-const host = "http://10.176.140.243:3000/backendowner/";
+const root = 'http://10.0.0.74:3000/'
 
-const dashboardURL = "'http://10.176.140.243:3000/"
+const host = root + "backendowner/";
 
-const logSignURL = "'http://10.176.140.243:3000/sign_log"
+const dashboardURL = root
+
+const logSignURL = root + "sign_log"

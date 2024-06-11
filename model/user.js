@@ -1,7 +1,7 @@
 
 class User{
     
-    constructor(id, firstname, lastname, email, pwd, contactmoov, contacttg, create_time){
+    constructor(id, firstname, lastname, email, pwd, contactmoov, contacttg){
             this.userID = id;
             this.firstname = firstname;
             this.lastname = lastname;
@@ -9,7 +9,6 @@ class User{
             this.pwd = pwd;
             this.contactmoov = contactmoov;
             this.contacttg = contacttg;
-            this.create_time = create_time;
     }
 
 
@@ -22,8 +21,6 @@ class User{
             "pwd" : this.pwd,
             "contactmoov" : this.contactmoov,
             "contacttg" : this.contacttg,
-            "create_time" : this.create_time
-
         }
     }
 
@@ -36,8 +33,6 @@ class User{
             user.pwd,
             user.contactmoov,
             user.contacttg,
-            user.create_time
-
             );
         return newUser;
     }
