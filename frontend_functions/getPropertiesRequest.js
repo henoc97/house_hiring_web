@@ -34,13 +34,14 @@ function getPropertiesRequest(type) {
     if (propertyoption) {
     propertyoption.innerHTML = ''; // Clear existing rows
 
-    propertyoption.forEach((property) => {
+    properties.forEach((property) => {
         console.log("Property data:", property); // Log chaque propriété
-        const row = document.createElement('tr');
-        row.innerHTML = `
-        <option value=${property.id}>${property.address} ${property.price}</option>
-        `;
-        propertyoption.appendChild(row);
+        const option = document.createElement('option');
+
+        option.value = property.id;
+        option.textContent = `${property.address} ${property.price}`;
+        
+        propertyoption.appendChild(option);
     });
     } else {
     console.error("Element with ID 'myPropertiesTable' not found.");

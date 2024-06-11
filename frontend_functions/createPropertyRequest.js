@@ -30,7 +30,7 @@ function createPropertyRequest(){
     .then(data => {
         console.log(data);
         document.getElementById('property-form').reset();
-        getPropertiesRequest();
+        getPropertiesRequest(1);
     })
     .catch(error => {
         console.error('Erreur:', error);

@@ -40,7 +40,7 @@ document.getElementById('btn').addEventListener('click', function() {
             if (propertyForm && propertiesTable) {
               propertyForm.addEventListener('submit', function(event) {
                 event.preventDefault(); 
-                createPropertyRequest(1);
+                createPropertyRequest();
               });
 
               getPropertiesRequest(1);

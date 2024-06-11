@@ -21,7 +21,7 @@ function getTenantsPropertiesRequest() {
       if (tableBody) {
         tableBody.innerHTML = ''; // Clear existing rows
 
-        properties.forEach((tenantproperty) => {
+        tenantsproperties.forEach((tenantproperty) => {
           console.log("tenantsproperties data:", tenantproperty); // Log chaque propriété
           const row = document.createElement('tr');
           row.innerHTML = `
