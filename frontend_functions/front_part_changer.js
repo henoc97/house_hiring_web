@@ -65,11 +65,16 @@ document.getElementById('btn').addEventListener('click', function() {
             document.querySelector('.details').innerHTML = data;
           });
 
-          getPropertiesRequest(2);
-          getTenantsPropertiesRequest();
           
+          
+          
+          const tenantproperty = document.getElementById("tenantspropertiesTable");
           const tenantForm = document.getElementById("tenant-form");
-          if (tenantForm) {
+          if (tenantForm && tenantproperty) {
+            getTenantsPropertiesRequest();
+            
+            getPropertiesRequest(2);
+
             tenantForm.addEventListener('submit', function(event) {
                 event.preventDefault();
                 createTenantRequest();
