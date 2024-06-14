@@ -1,9 +1,11 @@
 
 
 
-function getTenantsPropertiesRequest() {
+
+
+function getRecentTenantsRequest() {
     let token = localStorage.getItem('accessToken');
-    fetch(host + 'TenantsProperties', {
+    fetch(host + 'recentTenants', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token,
@@ -15,20 +17,24 @@ function getTenantsPropertiesRequest() {
       console.log("data received:", data); // Log les données reçues
 
       // Si les propriétés sont enveloppées dans un objet { myProperties }
-      const tenantsproperties = data;
+      const recentTenants = data;
 
-      const tableBody = document.getElementById("tenantspropertiesTable");
+      const tableBody = document.getElementById("recentTenantsTable");
       if (tableBody) {
         tableBody.innerHTML = ''; // Clear existing rows
 
-        tenantsproperties.forEach((tenantproperty) => {
-          console.log("tenantsproperties data:", tenantproperty); // Log chaque propriété
+        recentTenants.forEach((recentTenant) => {
+          console.log("recentTenants data:", recentTenant); // Log chaque propriété
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td>${tenantproperty.firstname} ${tenantproperty.lastname}</td>
-            <td>${tenantproperty.contactmoov} / ${tenantproperty.contacttg}</td>
-            <td>${tenantproperty.address_property}</td>
-            <td>${tenantproperty.price}</td>
+            <td>
+                <h4>${recentTenant.firstname} ${recentTenant.lastname.split(' ')[0]} <br> 
+                    <span>
+                        ${recentTenant.contactmoov} / ${recentTenant.contacttg}
+                    </span>
+                </h4>
+            </td>
+            <td>${recentTenant.create_time.split('T')[0]}</td>
           `;
           tableBody.appendChild(row);
         });
@@ -38,3 +44,7 @@ function getTenantsPropertiesRequest() {
     })
     .catch((error) => console.error('Error fetching tenantsproperties:', error));
   }
+
+
+
+  

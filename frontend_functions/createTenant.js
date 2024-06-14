@@ -4,7 +4,7 @@
 
 function createTenantRequest(){
 
-    let propertyID = document.getElementById('"property-option"').value;
+    let propertyID = document.getElementById('property-option').value;
     let name = document.getElementById('name').value;
     let lastname = document.getElementById('lastname').value;
     let contactmoov = document.getElementById('contactmoov').value;

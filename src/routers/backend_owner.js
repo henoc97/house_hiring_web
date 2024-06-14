@@ -4,7 +4,7 @@ const router = express.Router();
 
 const {getotp, createUserOwner, userauth, refreshToken} = require('../../controller/user');
 const {createProperties, myProperties} = require('../../controller/property');
-const {createTenant, TenantsProperties} = require('../../controller/tenant');
+const {createTenant, TenantsProperties, recentTenants} = require('../../controller/tenant');
 
 
 router.post("/getotp", getotp);
@@ -22,6 +22,8 @@ router.post("/myProperties", myProperties);
 router.post("/createTenant", createTenant);
 
 router.post("/TenantsProperties", TenantsProperties);
+
+router.post("/recentTenants", recentTenants);
 
 
 module.exports = router

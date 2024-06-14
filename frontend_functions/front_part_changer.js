@@ -26,6 +26,12 @@ document.getElementById('btn').addEventListener('click', function() {
           .then(response => response.text())
           .then(data => {
             document.querySelector('.details').innerHTML = data;
+            
+            const recentTenantsTable = document.getElementById('recentTenantsTable');
+            if (recentTenantsTable) {
+              
+              getRecentTenantsRequest();
+            }
           });
       } 
 
@@ -63,23 +69,23 @@ document.getElementById('btn').addEventListener('click', function() {
           .then(response => response.text())
           .then(data => {
             document.querySelector('.details').innerHTML = data;
+
+            const tenantproperty = document.getElementById("tenantspropertiesTable");
+            const tenantForm = document.getElementById("tenant-form");
+            if (tenantForm && tenantproperty) {
+              getTenantsPropertiesRequest();
+
+              getPropertiesRequest(2);
+
+              tenantForm.addEventListener('submit', function(event) {
+                  event.preventDefault();
+                  
+                  createTenantRequest();
+              })
+            }
           });
 
           
-          
-          
-          const tenantproperty = document.getElementById("tenantspropertiesTable");
-          const tenantForm = document.getElementById("tenant-form");
-          if (tenantForm && tenantproperty) {
-            getTenantsPropertiesRequest();
-            
-            getPropertiesRequest(2);
-
-            tenantForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                createTenantRequest();
-            })
-          }
       }
 
       if (this.id === 'myreciept-button') {
