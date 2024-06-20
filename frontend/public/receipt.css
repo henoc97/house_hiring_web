@@ -18,9 +18,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  height: 80vh;
+  margin-top: 25vh;
+  margin-bottom: 25vh;
   padding: 20px;
+}
+
+#receipt{
+  line-height: 1.6;
+  word-spacing: 0.5em;
 }
 
 .center-container {

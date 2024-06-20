@@ -1,6 +1,16 @@
 
 
 
+
+if (recentTenantsTable) {
+              
+  getRecentTenantsRequest();
+}
+
+getPropertiesRequest(1);
+document.getElementById('totalProperties').textContent = getPropertiesList().length;
+
+
 document.getElementById('btn').addEventListener('click', function() {
     document.querySelector('.sidebar').classList.toggle('open');
   });
@@ -59,6 +69,11 @@ document.getElementById('btn').addEventListener('click', function() {
           .then(response => response.text())
           .then(data => {
             document.querySelector('.details').innerHTML = data;
+
+            const tenantsTable = document.getElementById('alltenantsTable');
+            if (tenantsTable) {
+              getAllTenantsRequest()
+            }
           });
 
           

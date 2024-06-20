@@ -17,6 +17,8 @@ function getPropertiesRequest(type) {
       // Si les propriétés sont enveloppées dans un objet { myProperties }
       const properties = data.myProperties || data;
 
+      setPrpertiesList(properties);
+
       if (type == 1) {
         myPropertiesTableConstructor(properties);
       } else {
