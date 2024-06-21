@@ -36,7 +36,7 @@ function createTenantRequest(){
     .then(data => {
         console.log(data);
         document.getElementById('tenant-form').reset();
-        getTenantsPropertiesRequest();
+        getTenantsPropertiesRequest(1);
     })
     .catch(error => {
         console.error('Erreur:', error);

@@ -30,7 +30,7 @@ module.exports.require_receipt = (req, res) => {
                     } else {
                         console.log(_tokendata.userId, _tokendata.userEmail);
                         console.log(req.body);
-                        const {id_tenant_property, sumpayed, monthpayed,} = req.body;
+                        const {id_tenant_property, sumpayed, monthpayed} = req.body;
                         const query = "SELECT * FROM insert_tenant($1, $2, $3)";
                         const values = [id_tenant_property, sumpayed, monthpayed,];
                         return client.query(query, values, (err, result) => {

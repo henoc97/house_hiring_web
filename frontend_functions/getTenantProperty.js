@@ -1,7 +1,7 @@
 
 
 
-function getTenantsPropertiesRequest() {
+function getTenantsPropertiesRequest(type) {
     let token = localStorage.getItem('accessToken');
     fetch(host + 'TenantsProperties', {
       method: 'POST',
@@ -17,7 +17,21 @@ function getTenantsPropertiesRequest() {
       // Si les propriétés sont enveloppées dans un objet { myProperties }
       const tenantsproperties = data;
 
-      const tableBody = document.getElementById("tenantspropertiesTable");
+      if (type == 1) {
+        tenantsPropertiestableConstructor(tenantsproperties)
+      } else {
+        tenantsPropertiesoptionConstructor(tenantsproperties)
+      }
+      
+    })
+    .catch((error) => console.error('Error fetching tenantsproperties:', error));
+  }
+
+
+
+  function  tenantsPropertiestableConstructor(tenantsproperties){
+    
+    const tableBody = document.getElementById("tenantspropertiesTable");
       if (tableBody) {
         tableBody.innerHTML = ''; // Clear existing rows
 
@@ -35,6 +49,28 @@ function getTenantsPropertiesRequest() {
       } else {
         console.error("Element with ID 'tenantspropertiesTable' not found.");
       }
-    })
-    .catch((error) => console.error('Error fetching tenantsproperties:', error));
+
   }
+  
+  function  tenantsPropertiesoptionConstructor(tenantsproperties){
+    const tenantsPropertiesoption = document.getElementById("tenantsProperties-option");
+    if (tenantsPropertiesoption) {
+      tenantsPropertiesoption.innerHTML = ''; // Clear existing rows
+
+      tenantsproperties.forEach((tenantproperty) => {
+        console.log("Property data:", tenantproperty); // Log chaque propriété
+        const option = document.createElement('option');
+
+        option.value = tenantproperty.id;
+        option.dataset.price = tenantproperty.price; 
+        option.textContent = `${tenantproperty.firstname} ${tenantproperty.lastname.split(' ')[0]} ${tenantproperty.address_property} ${tenantproperty.price}`;
+        
+        tenantsPropertiesoption.appendChild(option);
+    });
+    } else {
+    console.error("Element with ID 'tenantsProperties-option' not found.");
+    }
+
+    
+  }
+  
