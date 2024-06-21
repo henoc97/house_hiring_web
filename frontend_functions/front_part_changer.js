@@ -103,8 +103,8 @@ document.getElementById('btn').addEventListener('click', function() {
           
       }
 
-      if (this.id === 'myreciept-button') {
-        fetch('/myreciept')
+      if (this.id === 'myreceipt-button') {
+        fetch('/receipts_part')
         .then(response => response.text())
         .then(data => {
           document.querySelector('.details').innerHTML = data;

@@ -46,8 +46,11 @@ router.get('/tenants_part', (req, res) => {
   });
 });
 
-router.get('/myreciept', (req, res) => {
-  res.render('myreciept');
+router.get('/receipts_part', (req, res) => {
+  res.render('receipts_part', {
+    myreceipts : "myreceipts",
+    requirereceipt:"requirereceipt"
+  });
 });
 
 router.get('/receipt', (req, res) => {
