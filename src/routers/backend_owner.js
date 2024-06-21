@@ -5,7 +5,7 @@ const router = express.Router();
 const {getotp, createUserOwner, userauth, refreshToken} = require('../../controller/user');
 const {createProperties, myProperties} = require('../../controller/property');
 const {createTenant, TenantsProperties, recentTenants, allTenants} = require('../../controller/tenant');
-const {require_receipt, receipt_unValid, receipt_valid} = require('../../controller/receipt');
+const {require_receipt, receipt_unValid, receipt_valid} = require('../../controller/');
 
 router.post("/getotp", getotp);
 
