@@ -56,7 +56,10 @@ function getTenantsPropertiesRequest(type) {
     const tenantsPropertiesoption = document.getElementById("tenantsProperties-option");
     if (tenantsPropertiesoption) {
       tenantsPropertiesoption.innerHTML = ''; // Clear existing rows
-
+      
+      if (tenantsPropertiesoption.innerHTML=='') {
+        console.log("yes");
+      }
       tenantsproperties.forEach((tenantproperty) => {
         console.log("Property data:", tenantproperty); // Log chaque propriété
         const option = document.createElement('option');

@@ -29,6 +29,8 @@ router.post("/allTenants", allTenants);
 
 router.post("/require_receipt", require_receipt);
 
+router.post("/receipt_unValid", receipt_unValid);
+
 
 
 module.exports = router

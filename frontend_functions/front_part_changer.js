@@ -4,10 +4,40 @@
 
 if (recentTenantsTable) {
               
+  getUnvalidReceiptsRequest();
   getRecentTenantsRequest();
 }
 
 document.getElementById('totalProperties').textContent = getPropertiesList().length;
+
+document.getElementById("unvaliReceiptsTable").addEventListener('click', function(e) {
+  if (e.target && e.target.closest('.govalidreceipt')) {
+    
+    e.preventDefault();
+    const receiptData = JSON.parse(e.target.closest('.govalidreceipt').getAttribute('data-receipt'));
+
+    // Generate a unique receipt number
+    const receiptNumber = 'REC' + Date.now(); // Example: REC1627890123456
+
+    // Get the current date
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    });
+
+    // Add receipt number and issue date to receipt data
+    receiptData.receiptNumber = receiptNumber;
+    receiptData.issueDate = formattedDate;
+
+    // Store the complete receipt data in localStorage
+    localStorage.setItem('selectedReceipt', JSON.stringify(receiptData));
+
+    // Redirect to the validation page
+    window.location.href = 'receipt';
+  }
+});
 
 
 document.getElementById('btn').addEventListener('click', function() {
@@ -36,9 +66,11 @@ document.getElementById('btn').addEventListener('click', function() {
           .then(data => {
             document.querySelector('.details').innerHTML = data;
             
+            const unvalidReceiptsTable = document.getElementById('unvaliReceiptsTable')
             const recentTenantsTable = document.getElementById('recentTenantsTable');
-            if (recentTenantsTable) {
+            if (recentTenantsTable && unvalidReceiptsTable) {
               
+              getUnvalidReceiptsRequest();
               getRecentTenantsRequest();
             }
           });
@@ -108,11 +140,18 @@ document.getElementById('btn').addEventListener('click', function() {
         .then(data => {
           document.querySelector('.details').innerHTML = data;
 
+
+          const requireRecieptForm = document.getElementById("receipt-form");
           const tenantsPropertiesoption = document.getElementById("tenantsProperties-option");
-          if (tenantsPropertiesoption) {
+          if (tenantsPropertiesoption && requireRecieptForm) {
             getTenantsPropertiesRequest(2);
 
-
+            requireRecieptForm.addEventListener('submit', function(event) {
+                  event.preventDefault();
+                  
+                  requireRecieptRequest();
+              })
+            
             tenantsPropertiesoption.addEventListener('change', function() {
               const selectedOption = this.options[this.selectedIndex];
               const price = selectedOption.dataset.price;
@@ -120,6 +159,12 @@ document.getElementById('btn').addEventListener('click', function() {
             });
 
             $(document).ready(function() {
+
+              $('#months').select2({
+                placeholder: 'Select months',
+                allowClear: true
+              });
+
               const currentDate = new Date();
               const currentMonth = currentDate.getMonth() + 1; // Les mois commencent à 0 en JavaScript
               const currentYear = currentDate.getFullYear();
@@ -180,8 +225,7 @@ document.getElementById('btn').addEventListener('click', function() {
                       const [monthNumber, year] = monthYear.split('-');
                       return `${getMonthName(parseInt(monthNumber))} ${year}`;
                   }).join(' - ');
-                  document.getElementById('selected-months').value = selectedMonths;
-              }
+                  }
           
               function getMonthName(monthNumber) {
                   const monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
@@ -191,8 +235,8 @@ document.getElementById('btn').addEventListener('click', function() {
               // Appel pour charger les propriétés des locataires au chargement de la page
               getTenantsPropertiesRequest(2);
           });
-          
           }
+          
         });
       }
     });

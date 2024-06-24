@@ -15,7 +15,7 @@
         <i class='bx bx-home-smile'></i>
         <h1>Reçu de Paiement de Loyer</h1>
       </header>
-      <div class="receipt-details">
+      <div class="receipt-details" id="receiptDetails">
         <p><strong>Nom du Locataire :</strong> Jean Dupont</p>
         <p><strong>Adresse du Locataire :</strong> 123 Rue Exemple, 75001 Paris</p>
         <p><strong>Numéro de Reçu :</strong> 00123</p>
@@ -40,6 +40,34 @@
     </div>
     <button id="download-pdf" onclick="downloadPDF()">Télécharger en PDF</button>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const receiptData = JSON.parse(localStorage.getItem('selectedReceipt'));
+      if (receiptData) {
+        const receiptDetails = document.getElementById('receiptDetails');
+        receiptDetails.innerHTML = '';
+
+        receiptDetails.innerHTML = `
+
+          <p><strong>Numéro de Reçu :</strong> ${receiptData.receiptNumber} </p>
+          <p><strong>Date d'Émission :</strong> ${receiptData.issueDate} </p>
+          <p><strong>Nom du Locataire :</strong> ${receiptData.firstname} ${receiptData.lastname}</p>
+          <p><strong>Adresse du Locataire :</strong> ${receiptData.address_property} </p>
+          
+          <p><strong>Montant du Loyer :</strong> ${receiptData.sumpayed} FCFA</p>
+
+          
+        `;
+      }
+
+      document.getElementById('validateButton').addEventListener('click', function() {
+        // Handle receipt validation logic here
+        // For example, you could send a request to validate the receipt
+        console.log('Receipt validated:', receiptData);
+      });
+    });
+  </script>
 
   <script>
     function downloadPDF() {
