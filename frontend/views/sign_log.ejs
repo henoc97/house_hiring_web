@@ -84,6 +84,7 @@
       // Stocker les tokens si l'authentification est réussie
       if (data.accessToken) {
         console.log(data.accessToken);
+        localStorage.setItem('sold', data.user.sold);
         localStorage.setItem('accessToken', data.accessToken);
         setCookie("refreshToken", data.refreshToken, 7);
         window.location.href = "/"; 

@@ -18,8 +18,8 @@ function getUnvalidReceiptsRequest() {
 
       // Si les propriétés sont enveloppées dans un objet { myProperties }
       const unvaliReceipts = data;
-
-      const tableBody = document.getElementById("unvaliReceiptsTable");
+      getValidReceiptsRequest();
+      const tableBody = document.getElementById("unvalidReceiptsTable");
       if (tableBody) {
         tableBody.innerHTML = ''; // Clear existing rows
 
@@ -30,16 +30,16 @@ function getUnvalidReceiptsRequest() {
                 <td>${unvalidReceipt.firstname} ${unvalidReceipt.lastname.split(' ')[0]}</td>
                 <td>${unvalidReceipt.monthpayed}</td>
                 <td>
-                    <span class="badge bg_worning">${unvalidReceipt.address_property}</span>
+                  <span class="badge bg_worning">${unvalidReceipt.address_property}</span>
                 </td>
                 <td>
                 ${unvalidReceipt.sumpayed}
                 </td>
                 <td>
-                    <a href="#" class="govalidreceipt" data-receipt='${JSON.stringify(unvalidReceipt)}'>
-                      <span class="badge bg_danger">Non approuvé</span>
-                    </a>
-                 </td>
+                  <a href="#" class="govalidreceipt" data-receipt='${JSON.stringify(unvalidReceipt)}'>
+                    <span class="badge bg_danger">Approuvé</span>
+                  </a>
+                </td>
           `;
           tableBody.appendChild(row);
         });

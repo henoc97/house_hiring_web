@@ -13,9 +13,14 @@ function setSold(sold) {
     console.log("ca marche bien");
     return localStorage.getItem('sold');
   }
+
+  function showNewSold(){
+    document.getElementById('sold').innerHTML = 
+        `<h3>Solde : ${getsold()}</h3>`;
+  }
   
   
-  function updateSoldRequest() {
+  function updateSoldRequest(spend) {
       let token = localStorage.getItem('accessToken');
       fetch(host + 'updateSold', {
         method: 'POST',
@@ -23,13 +28,19 @@ function setSold(sold) {
           'Authorization': 'Bearer ' + token,
           'Content-Type': 'application/json'
         },
+        body: JSON.stringify({
+          "spend":spend
+        })
       })
       .then(response => response.json())
       .then(data => {
         console.log("data received:", data); // Log les données reçues
   
         const sold = data;
+        console.log("sold : ", sold);
         setSold(sold);
+
+        document.getElementById('sold').innerHTML = `<h3>Solde : ${sold}</h3>`;
        
       })
       .catch((error) => console.error('Error fetching tenantsproperties:', error));

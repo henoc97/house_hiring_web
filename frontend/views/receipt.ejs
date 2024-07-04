@@ -44,6 +44,7 @@
     </div>
   </div>
   <script src="endpoints.js"></script>
+  <script src="update_sold_utils.js"></script>
   <script>
     const receiptData = JSON.parse(localStorage.getItem('selectedReceipt'));
     document.addEventListener('DOMContentLoaded', (event) => {
@@ -84,33 +85,39 @@
   <script>
     let token = localStorage.getItem('accessToken');
     function validateReceipt() {
-      console.log("heheheheheeh");
-      fetch(host + 'validateReceipt', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
-      },
-      body : JSON.stringify({
-        "id": receiptData.id,
-      })
-    })
-    .then(response => {
-        if (!response.ok && (response.status === 401 || response.status === 403)) {
-            alert("problem")
-            return renewAccessToken().then(() => validateReceipt());
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        //document.getElementById('tenant-form').reset();
-        //getTenantsPropertiesRequest(1);
-    })
-    .catch(error => {
-        console.error('Erreur:', error);
-        window.location.href = "/sign_log";
-    });
+      if((getsold() - 650 * 0.25) > 0){
+        console.log("heheheheheeh");
+        fetch(host + 'validateReceipt', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({
+          "id": receiptData.id,
+        })
+        })
+        .then(response => {
+            if (!response.ok && (response.status === 401 || response.status === 403)) {
+                alert("problem")
+                return renewAccessToken().then(() => validateReceipt());
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            updateSoldRequest(650 * 0.25);
+            window.location.href = "/"
+            
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            window.location.href = "/sign_log";
+        });
+      } else {
+        alert('solde insuffisant. Cette opération coute 0.25€')
+      }
+      
     }
   </script>
 

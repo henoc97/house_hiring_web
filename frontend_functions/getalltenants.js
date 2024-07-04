@@ -11,6 +11,10 @@ function getNumberOfTenants() {
   return localStorage.getItem('numberOfTenants');
 }
 
+function showNumberOfTenants (){
+  const totalTenants = document.getElementById('totalTenants');
+  totalTenants.textContent = getNumberOfTenants();
+}
 
 function getAllTenantsRequest() {
     let token = localStorage.getItem('accessToken');
@@ -28,6 +32,7 @@ function getAllTenantsRequest() {
       // Si les propriétés sont enveloppées dans un objet { myProperties }
       const allTenants = data;
       setNumberOfTenants(allTenants.length);
+      showNumberOfTenants();
       const tableBody = document.getElementById("alltenantsTable");
       if (tableBody) {
         tableBody.innerHTML = ''; // Clear existing rows

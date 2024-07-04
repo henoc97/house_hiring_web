@@ -20,8 +20,9 @@ totalProperties.textContent = getNumberOfProperties();
 const totalPayments = document.getElementById('totalPayments');
 totalPayments.textContent = getNumberOfPayments();
 
+showNewSold();
 
-document.getElementById("unvaliReceiptsTable").addEventListener('click', function(e) {
+document.getElementById("unvalidReceiptsTable").addEventListener('click', function(e) {
   if (e.target && e.target.closest('.govalidreceipt')) {
     
     e.preventDefault();
@@ -77,7 +78,7 @@ document.getElementById('btn').addEventListener('click', function() {
           .then(data => {
             document.querySelector('.details').innerHTML = data;
             
-            const unvalidReceiptsTable = document.getElementById('unvaliReceiptsTable')
+            const unvalidReceiptsTable = document.getElementById('unvalidReceiptsTable')
             const recentTenantsTable = document.getElementById('recentTenantsTable');
             if (recentTenantsTable && unvalidReceiptsTable) {
               

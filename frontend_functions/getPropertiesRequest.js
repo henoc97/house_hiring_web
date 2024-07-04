@@ -8,6 +8,11 @@ function getNumberOfProperties() {
   return localStorage.getItem('numberOfProperties');
 }
 
+function showNumberOfProperties() {
+  const totalProperties = document.getElementById('totalProperties');
+  totalProperties.textContent = getNumberOfProperties();
+}
+
 
 function getPropertiesRequest(type) {
     let token = localStorage.getItem('accessToken');
@@ -26,6 +31,8 @@ function getPropertiesRequest(type) {
       const properties = data.myProperties || data;
 
       setNumberOfProperties(properties.length);
+
+      showNumberOfProperties();
 
       setPrpertiesList(properties);
 

@@ -9,6 +9,12 @@ function getNumberOfPayments() {
   return localStorage.getItem('numberOfPayments');
 }
 
+function showNumberOfPayments() {
+  const totalPayments = document.getElementById('totalPayments');
+  totalPayments.textContent = getNumberOfPayments();
+
+}
+
 
 
 function getValidReceiptsRequest() {
@@ -28,6 +34,7 @@ function getValidReceiptsRequest() {
       const valiReceipts = data;
 
       setNumberOfPayments(valiReceipts.length);
+      showNumberOfPayments();
 
       const tableBody = document.getElementById("valiReceiptsTable");
       if (tableBody) {

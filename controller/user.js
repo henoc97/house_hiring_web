@@ -8,6 +8,9 @@ const generateToken = require("../functions/token")
 const sendOTPemail = require('../email/activation/sender');
 const codeOTP = require('../functions/otp');
 const { config } = require("dotenv");
+const jwt = require('jsonwebtoken');
+
+require('dotenv').config();
 
 const email_otp = {}
 
@@ -177,12 +180,9 @@ module.exports.updateSold = (req, res) => {
                             if (err) {
                                 return console.error('Erreur lors de l\'exécution de la requête', err);
                             }
-                            console.log(result.rows);
-                            // const myProperties = result.rows.map(row =>
-                            //      Property.jsonTONewProperty(row));
-                            //console.log("myProperties: ", myProperties);
-                        
-                            res.status(200).json(result.rows);
+                            console.log("result.rows : ", result.rows[0].update_sold);
+                            
+                            res.status(200).json(result.rows[0].update_sold);
                     })
                     }
                 }
