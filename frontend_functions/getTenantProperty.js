@@ -1,5 +1,14 @@
 
 
+function setNumberOfTenantsProperties(numberOfTenantsProperties) {
+  localStorage.setItem('numberOfTenantsProperties', numberOfTenantsProperties);
+}
+
+function getNumberOfTenantsProperties() {
+  console.log("ca marche bien");
+  return localStorage.getItem('numberOfTenantsProperties');
+}
+
 
 function getTenantsPropertiesRequest(type) {
     let token = localStorage.getItem('accessToken');
@@ -16,6 +25,7 @@ function getTenantsPropertiesRequest(type) {
 
       // Si les propriétés sont enveloppées dans un objet { myProperties }
       const tenantsproperties = data;
+      setNumberOfTenantsProperties(tenantsproperties.length)
 
       if (type == 1) {
         tenantsPropertiestableConstructor(tenantsproperties)

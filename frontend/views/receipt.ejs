@@ -38,35 +38,80 @@
         <p>© 2024 Property Manager. Tous droits réservés.</p>
       </footer>
     </div>
-    <button id="download-pdf" onclick="downloadPDF()">Télécharger en PDF</button>
+    
+    <div id="receipt_btns">
+      
+    </div>
   </div>
-
+  <script src="endpoints.js"></script>
   <script>
+    const receiptData = JSON.parse(localStorage.getItem('selectedReceipt'));
     document.addEventListener('DOMContentLoaded', (event) => {
-      const receiptData = JSON.parse(localStorage.getItem('selectedReceipt'));
       if (receiptData) {
+        let receipt_btns = document.getElementById('receipt_btns');
+        if (receiptData.payment_state == 1) {
+          const download_btn = document.createElement('button');
+          download_btn.id = 'download-pdf';
+          download_btn.onclick = downloadPDF;
+          download_btn.innerHTML = "Télécharger en PDF"
+          receipt_btns.appendChild(download_btn);
+
+        }
+        if (receiptData.payment_state == 0) {
+          const validate_btn = document.createElement('button');
+          validate_btn.id = 'validate-receipt';
+          validate_btn.onclick = validateReceipt;
+          validate_btn.innerHTML = "Valider le reçu"
+          receipt_btns.appendChild(validate_btn);
+
+        }
         const receiptDetails = document.getElementById('receiptDetails');
         receiptDetails.innerHTML = '';
 
         receiptDetails.innerHTML = `
-
           <p><strong>Numéro de Reçu :</strong> ${receiptData.receiptNumber} </p>
           <p><strong>Date d'Émission :</strong> ${receiptData.issueDate} </p>
           <p><strong>Nom du Locataire :</strong> ${receiptData.firstname} ${receiptData.lastname}</p>
           <p><strong>Adresse du Locataire :</strong> ${receiptData.address_property} </p>
-          
-          <p><strong>Montant du Loyer :</strong> ${receiptData.sumpayed} FCFA</p>
-
-          
+          <p><strong>Montant du Loyer :</strong> ${receiptData.sumpayed} FCFA</p>          
         `;
       }
 
-      document.getElementById('validateButton').addEventListener('click', function() {
-        // Handle receipt validation logic here
-        // For example, you could send a request to validate the receipt
-        console.log('Receipt validated:', receiptData);
-      });
+      
     });
+  </script>
+
+  <script>
+    let token = localStorage.getItem('accessToken');
+    function validateReceipt() {
+      console.log("heheheheheeh");
+      fetch(host + 'validateReceipt', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body : JSON.stringify({
+        "id": receiptData.id,
+      })
+    })
+    .then(response => {
+        if (!response.ok && (response.status === 401 || response.status === 403)) {
+            alert("problem")
+            return renewAccessToken().then(() => validateReceipt());
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        //document.getElementById('tenant-form').reset();
+        //getTenantsPropertiesRequest(1);
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        window.location.href = "/sign_log";
+    });
+    }
   </script>
 
   <script>

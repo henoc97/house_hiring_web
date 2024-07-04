@@ -2,7 +2,14 @@
 
 
 
+function setNumberOfTenants(numberOfTenants) {
+  localStorage.setItem('numberOfTenants', numberOfTenants);
+}
 
+function getNumberOfTenants() {
+  console.log("ca marche bien");
+  return localStorage.getItem('numberOfTenants');
+}
 
 
 function getAllTenantsRequest() {
@@ -20,7 +27,7 @@ function getAllTenantsRequest() {
 
       // Si les propriétés sont enveloppées dans un objet { myProperties }
       const allTenants = data;
-
+      setNumberOfTenants(allTenants.length);
       const tableBody = document.getElementById("alltenantsTable");
       if (tableBody) {
         tableBody.innerHTML = ''; // Clear existing rows

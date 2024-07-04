@@ -8,7 +8,18 @@ if (recentTenantsTable) {
   getRecentTenantsRequest();
 }
 
-document.getElementById('totalProperties').textContent = getPropertiesList().length;
+const totalTenants = document.getElementById('totalTenants');
+totalTenants.textContent = getNumberOfTenants();
+
+const totalTenantsProperties = document.getElementById('totalTenantsProperties');
+totalTenantsProperties.textContent = getNumberOfTenantsProperties();
+
+const totalProperties = document.getElementById('totalProperties');
+totalProperties.textContent = getNumberOfProperties();
+
+const totalPayments = document.getElementById('totalPayments');
+totalPayments.textContent = getNumberOfPayments();
+
 
 document.getElementById("unvaliReceiptsTable").addEventListener('click', function(e) {
   if (e.target && e.target.closest('.govalidreceipt')) {
@@ -134,12 +145,50 @@ document.getElementById('btn').addEventListener('click', function() {
           
       }
 
+
       if (this.id === 'myreceipt-button') {
         fetch('/receipts_part')
         .then(response => response.text())
         .then(data => {
+
+          
+
           document.querySelector('.details').innerHTML = data;
 
+          const valiReceiptsTable = document.getElementById("valiReceiptsTable");
+          if (valiReceiptsTable) {
+            console.log("ccol");
+            getValidReceiptsRequest();
+          }
+
+          valiReceiptsTable.addEventListener('click', function(e) {
+            if (e.target && e.target.closest('.govalidreceipt')) {
+              
+              e.preventDefault();
+              const receiptData = JSON.parse(e.target.closest('.govalidreceipt').getAttribute('data-receipt'));
+          
+              // Generate a unique receipt number
+              const receiptNumber = 'REC' + Date.now(); // Example: REC1627890123456
+          
+              // Get the current date
+              const currentDate = new Date();
+              const formattedDate = currentDate.toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+              });
+          
+              // Add receipt number and issue date to receipt data
+              receiptData.receiptNumber = receiptNumber;
+              receiptData.issueDate = formattedDate;
+          
+              // Store the complete receipt data in localStorage
+              localStorage.setItem('selectedReceipt', JSON.stringify(receiptData));
+          
+              // Redirect to the validation page
+              window.location.href = 'receipt';
+            }
+          });
 
           const requireRecieptForm = document.getElementById("receipt-form");
           const tenantsPropertiesoption = document.getElementById("tenantsProperties-option");

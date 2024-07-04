@@ -1,4 +1,12 @@
 
+function setNumberOfProperties(numberOfProperties) {
+  localStorage.setItem('numberOfProperties', numberOfProperties);
+}
+
+function getNumberOfProperties() {
+  console.log("ca marche bien");
+  return localStorage.getItem('numberOfProperties');
+}
 
 
 function getPropertiesRequest(type) {
@@ -16,6 +24,8 @@ function getPropertiesRequest(type) {
 
       // Si les propriétés sont enveloppées dans un objet { myProperties }
       const properties = data.myProperties || data;
+
+      setNumberOfProperties(properties.length);
 
       setPrpertiesList(properties);
 
