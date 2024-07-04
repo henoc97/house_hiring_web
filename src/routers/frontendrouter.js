@@ -25,6 +25,14 @@ router.get('/dashboard', (req, res) => {
   });
 });
 
+router.get('/profile', (req, res) => {
+  res.render('profile_part', {
+    accountinfo: 'accountinfo',
+    uploadsignature: 'uploadsignature',
+    payementmodalities: 'payementmodalities'
+  });
+});
+
 router.get('/propertiespart', (req, res) => {
   res.render('propertiespart', {
     myproperties : "myproperties",

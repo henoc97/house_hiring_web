@@ -212,12 +212,21 @@
 
 /* End Top Bar */
 
-.card-boxes {
+.card-boxes{
   position: relative;
   width: 100%;
   padding: 1rem 1.5rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+}
+
+.profile-card-boxes {
+  position: relative;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 30px;
 }
 
@@ -232,6 +241,19 @@
   cursor: pointer;
 }
 
+.profile-card-boxes .box {
+  position: relative;
+  background: var(--white);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
 .card-boxes .box .numbers {
   position: relative;
   font-size: 2.5rem;
@@ -239,14 +261,14 @@
   color: var(--dark-blue);
 }
 
-.card-boxes .box .box_topic {
+.card-boxes .box .box_topic, .profile-card-boxes .box .box_topic {
   position: relative;
   margin-top: 5px;
   font-size: 1.1em;
   color: var(--gray);
 }
 
-.card-boxes .box i {
+.card-boxes .box i, .profile-card-boxes  .box i {
   position: relative;
   font-size: 3.5em;
   color: var(--dark-blue);
@@ -553,6 +575,9 @@ form button:hover {
   .card-boxes {
     grid-template-columns: repeat(2, 1fr);
   }
+  .profile-card-boxes {
+    grid-template-columns: repeat(1, 1fr);
+  }
   .details {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -567,11 +592,17 @@ form button:hover {
   .card-boxes {
     grid-template-columns: repeat(2, 1fr);
   }
+  .profile-card-boxes {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 @media screen and (max-width: 600px) {
   .card-boxes {
     width: 100%;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .profile-card-boxes {
     grid-template-columns: repeat(1, 1fr);
   }
   .details {

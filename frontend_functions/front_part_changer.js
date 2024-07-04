@@ -88,6 +88,15 @@ document.getElementById('btn').addEventListener('click', function() {
           });
       } 
 
+      if (this.id === 'porfile-button') {
+        fetch('/profile')
+          .then(response => response.text())
+          .then(data => {
+            document.querySelector('.details').innerHTML = data;
+            
+          });
+      } 
+
       if (this.id === 'proprietes-button') {
         fetch('/propertiespart')
           .then(response => response.text())
