@@ -93,9 +93,54 @@ document.getElementById('btn').addEventListener('click', function() {
           .then(response => response.text())
           .then(data => {
             document.querySelector('.details').innerHTML = data;
+
+            const uploadForm = document.getElementById('uploadForm');
+            if (uploadForm) {
+              uploadForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                
+                const formData = new FormData();
+                const fileInput = document.getElementById('imageUpload');
+                formData.append('image', fileInput.files[0]);
+    
+                try {
+                    const response = await fetch(host + '/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Erreur lors de l\'upload du fichier');
+                    }
+
+                    const result = await response.json();
+                    const uploadedImage = document.getElementById('uploadedImage');
+                    uploadedImage.src = result.filename;
+                    uploadedImage.style.display = 'block';
+                    alert(result.filename);
+
+                    // Sauvegarder le nom du fichier dans le localStorage
+                    localStorage.setItem('uploadedImageFilename', result.filename);
+                } catch (error) {
+                    console.error(error);
+                    alert('Une erreur est survenue lors de l\'upload du fichier');
+                }
+            });
+            }
+  
+          // Check if an image filename is stored in local storage
+          const filename = localStorage.getItem('uploadedImageFilename');
+          if (filename) {
+              const uploadedImage = document.getElementById('uploadedImage');
+              uploadedImage.src = `${filename}`;
+              uploadedImage.style.display = 'block';
+          }
             
           });
       } 
+
+
+      
 
       if (this.id === 'proprietes-button') {
         fetch('/propertiespart')

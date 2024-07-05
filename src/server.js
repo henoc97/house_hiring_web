@@ -26,6 +26,9 @@ app.use(express.static(path.join(__dirname, '../frontend/img')));
 
 app.use(express.static(path.join(__dirname, '../frontend_functions')));
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
 // Importer le router
 const frontendrouter = require('./routers/frontendrouter'); 
 

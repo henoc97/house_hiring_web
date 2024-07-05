@@ -7,6 +7,9 @@ const {createProperties, myProperties} = require('../../controller/property');
 const {createTenant, TenantsProperties, recentTenants, allTenants} = require('../../controller/tenant');
 const {require_receipt, receipt_unValid, receipt_valid, validateReceipt} = require('../../controller/receipt');
 
+
+const {upload} = require('../../functions/storepicture');
+
 router.post("/getotp", getotp);
 
 router.post("/createUserOwner", createUserOwner);
@@ -39,6 +42,23 @@ router.post("/receipt_valid", receipt_valid);
 router.post("/validateReceipt", validateReceipt);
 
 
+router.post('/upload', upload.single('image'), (req, res) => {
+    try {
+        // Vérifier si un fichier a été téléchargé
+        if (!req.file) {
+            return res.status(400).json({ message: 'Aucun fichier téléchargé' });
+        }
 
+        // Construire le chemin de l'image téléchargée
+        const imageUrl = `../../frontend/img/${req.file.filename}`;
+
+        // Répondre avec l'URL de l'image et le nom du fichier
+        console.log("imageUrl:", imageUrl, "filename:",  req.file.filename);
+        res.status(200).json({ imageUrl: imageUrl, filename: req.file.filename });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Erreur lors de l\'upload du fichier' });
+    }
+});
 
 module.exports = router

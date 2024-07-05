@@ -223,6 +223,8 @@
 
 .profile-card-boxes {
   position: relative;
+  display: flex;
+  justify-content: space-between;
   width: 100%;
   padding: 1rem 1.5rem;
   display: grid;
@@ -254,6 +256,7 @@
   cursor: pointer;
 }
 
+
 .card-boxes .box .numbers {
   position: relative;
   font-size: 2.5rem;
@@ -268,10 +271,22 @@
   color: var(--gray);
 }
 
-.card-boxes .box i, .profile-card-boxes  .box i {
+.card-boxes .box i, .profile-card-boxes .box i {
   position: relative;
   font-size: 3.5em;
   color: var(--dark-blue);
+  margin-bottom: 10px;
+}
+
+
+.profile-card-boxes .box strong {
+  color: var(--dark-blue);
+}
+
+.profile-card-boxes .box .box_topic, .profile-card-boxes .box h3 {
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
 }
 
 .details {
