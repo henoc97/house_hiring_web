@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const sharp = require('sharp');
 
 
 const {getotp, createUserOwner, userauth, updateSold, refreshToken} = require('../../controller/user');
@@ -53,7 +54,6 @@ router.post('/upload', upload.single('image'), (req, res) => {
         const imageUrl = `../../frontend/img/${req.file.filename}`;
 
         // Répondre avec l'URL de l'image et le nom du fichier
-        console.log("imageUrl:", imageUrl, "filename:",  req.file.filename);
         res.status(200).json({ imageUrl: imageUrl, filename: req.file.filename });
     } catch (err) {
         console.error(err);
@@ -62,3 +62,4 @@ router.post('/upload', upload.single('image'), (req, res) => {
 });
 
 module.exports = router
+

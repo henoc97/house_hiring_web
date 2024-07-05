@@ -117,7 +117,6 @@ document.getElementById('btn').addEventListener('click', function() {
                     const uploadedImage = document.getElementById('uploadedImage');
                     uploadedImage.src = result.filename;
                     uploadedImage.style.display = 'block';
-                    alert(result.filename);
 
                     // Sauvegarder le nom du fichier dans le localStorage
                     localStorage.setItem('uploadedImageFilename', result.filename);
